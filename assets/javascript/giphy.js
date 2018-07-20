@@ -38,6 +38,8 @@ function displayGIF() {
 
         for (var i = 0; i < response.data.length; i++) {
             var newDiv = $("<div>");
+            var imageHolder = $("<div>");
+            imageHolder.attr('id', 'holder');
 
             animated = response.data[i].images.original.url;
             
@@ -45,18 +47,22 @@ function displayGIF() {
             gifStills = $("<img id='stillState' class='gif-display'>");
             gifStills.attr('src', stills, );
             gifStills.attr("data-state", 'still');
-            newDiv.append(gifStills);
+            // newDiv.append(gifStills);
+            imageHolder.append(gifStills);
             
             ratings = response.data[i].rating;
             ratingsArray.push(ratings);
             ratingsDiv = $("<p class='ratings-text'>").text(ratings);
             // ratingsDiv = $("<div class='ratings-text'>").text(ratings);
-            newDiv.append(ratingsDiv);
+            // newDiv.append(ratingsDiv);
+            imageHolder.append(ratingsDiv);
 
             gifStills.attr("data-still", stills);
             gifStills.attr("data-animated", animated);
             gifStills.attr("data-rating", ratings);
 
+
+            newDiv.append(imageHolder);
             $("#gifs-view").append(newDiv);
         } // Closes 'for-loop'
 
@@ -102,8 +108,7 @@ $(document).on("click", ".gif-display", function () {
         $(this).attr('src', $(this).attr("data-still"));
         $(this).attr("data-state", "still");
     }
-
-
+    
 });
 
 renderButtons();

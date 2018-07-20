@@ -1,15 +1,14 @@
 
 
 header {
-    height: 25px;
+    text-align: center;
+    color: white;
+    height: 50px;
+    background-color: black;
+    min-width: 100%;
 }
 body {
-    background-color: bisque;
-}
-
-.form {
-    margin-left: 50px;
-    margin-right: 50px;
+    background-color: darkgray;
 }
 
 .wrapper {
@@ -30,13 +29,23 @@ body {
 }
 
 #stillState {
-    position: relative;
+    padding: 5px;
+    max-width: 95%;
+    /* background-color: red; */
+}
+
+#holder {
+    float: left;
+    margin: 5px;
+    padding-top: 5px;
+    /* clear: both; */
+    
 }
 
 .ratings-text {
     font-size: 14pt;
     text-transform: uppercase;
-    position: relative;
+    text-align: center;
 }
 
 .btn-primary {
@@ -45,4 +54,11 @@ body {
 
 #actor-form {
     float: right;
+}
+
+
+
+footer {
+    height: 25px;
+    background-color: aqua;
 }
