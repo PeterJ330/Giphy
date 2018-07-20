@@ -1,0 +1,16 @@
+.ratings-text {
+    font-size: 14pt;
+    text-transform: uppercase;
+}
+
+/* .actor-btn {
+    margin: 5px;
+} */
+
+.btn-primary {
+    margin: 5px;
+}
+
+#actor-form {
+    float: right;
+}
