@@ -25,6 +25,7 @@ function displayGIF() {
     var limit = 10;
     var gifRating = "PG-13"
     var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + gifName + "&limit=" + limit + "&offset=&rating=" + gifRating + "&lang=en";
+    // var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=" + apiKey + "&tag=" + gifName + "&limit=" + limit + "&offset=&rating=" + gifRating + "&lang=en";
     var ratingsArray = [];
 
     $("#gifs-view").empty();
@@ -39,7 +40,7 @@ function displayGIF() {
             var newDiv = $("<div>");
 
             animated = response.data[i].images.original.url;
-
+            
             stills = response.data[i].images.original_still.url;
             gifStills = $("<img id='stillState' class='gif-display'>");
             gifStills.attr('src', stills, );
@@ -49,6 +50,7 @@ function displayGIF() {
             ratings = response.data[i].rating;
             ratingsArray.push(ratings);
             ratingsDiv = $("<p class='ratings-text'>").text(ratings);
+            // ratingsDiv = $("<div class='ratings-text'>").text(ratings);
             newDiv.append(ratingsDiv);
 
             gifStills.attr("data-still", stills);
@@ -71,6 +73,7 @@ function renderButtons() {
     for (var i = 0; i < topics.length; i++) {
         var buttons = $("<button>");
         buttons.addClass("btn btn-primary");
+        buttons.attr('id', topics[i]);
         buttons.attr("data-name", topics[i]);
         buttons.text(topics[i]);
         $("#gifButtons").append(buttons);

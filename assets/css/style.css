@@ -1,11 +1,43 @@
+
+
+header {
+    height: 25px;
+}
+body {
+    background-color: bisque;
+}
+
+.form {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.wrapper {
+    margin-right: 50px;
+}
+#gifs-view {
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+#gifButtons {
+    margin-left: 25px;
+    margin-right: 50px;
+}
+
+.gif-display {
+    /* float: right; */
+}
+
+#stillState {
+    position: relative;
+}
+
 .ratings-text {
     font-size: 14pt;
     text-transform: uppercase;
+    position: relative;
 }
-
-/* .actor-btn {
-    margin: 5px;
-} */
 
 .btn-primary {
     margin: 5px;
