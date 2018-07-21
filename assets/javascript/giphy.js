@@ -62,7 +62,8 @@ function displayGIF() {
 
             ratings = response.data[i].rating;
             ratingsArray.push(ratings);
-            ratingsDiv = $("<p class='ratings-text'>").text(ratings);                        
+            // ratingsDiv = $("<p class='ratings-text'>").text(ratings);
+            ratingsDiv = $("<div class='ratings-text'>").text(ratings);                        
             imageHolder.append(ratingsDiv);
 
             gifStills.attr("data-still", stills);
