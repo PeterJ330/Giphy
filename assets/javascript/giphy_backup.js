@@ -12,13 +12,13 @@ var topics = [
     "Tom Hanks",
 ];
 
+console.log(actorNames);
+
 var stills;
 var animated;
 var gifStills;
-var gifAnimated;
-
-// var animatedURL = [];
-// var stillsURL = [];
+var ratingsDiv;
+var ratings;
 
 // calls giphy api
 function displayGIF() {
@@ -27,9 +27,8 @@ function displayGIF() {
     var limit = 10;
     var gifRating = "PG-13"
     var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + gifName + "&limit=" + limit + "&offset=&rating=" + gifRating + "&lang=en";
-    var stillsURL = [];
+    // var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=" + apiKey + "&tag=" + gifName + "&limit=" + limit + "&offset=&rating=" + gifRating + "&lang=en";
     var ratingsArray = [];
-    var animatedURL = [];
 
     $("#gifs-view").empty();
 
@@ -40,39 +39,36 @@ function displayGIF() {
         console.log(queryURL);
 
         for (var i = 0; i < response.data.length; i++) {
-
             var newDiv = $("<div>");
-
-            stills = response.data[i].images.original_still.url;
-            // stillsURL.push(stills);
-            gifStills = $("<img id='stillState' class='gif-display'>");
-            gifStills.attr('src', stills,);
-            gifStills.attr("data-state", 'still');
-            newDiv.append(gifStills);
+            var imageHolder = $("<div>");
+            imageHolder.attr('id', 'holder');
 
             animated = response.data[i].images.original.url;
-            // animatedURL.push(animated);                    
-            gifAnimated = $("<img id='animatedState' class='gif-display'>");
-            gifAnimated.attr('src', animated);  
-            gifAnimated.attr("data-state", 'animated');
 
-            var ratings = response.data[i].rating;
+            stills = response.data[i].images.original_still.url;
+            gifStills = $("<img id='stillState' class='gif-display'>");
+            gifStills.attr('src', stills, );
+            gifStills.attr("data-state", 'still');
+            // newDiv.append(gifStills);
+            imageHolder.append(gifStills);
+
+            ratings = response.data[i].rating;
             ratingsArray.push(ratings);
-            var ratingsDiv = $("<p class='ratings-text'>").text(ratingsArray[i]);
-            newDiv.append(ratingsDiv);
+            ratingsDiv = $("<p class='ratings-text'>").text(ratings);
+            // ratingsDiv = $("<div class='ratings-text'>").text(ratings);
+            // newDiv.append(ratingsDiv);
+            imageHolder.append(ratingsDiv);
 
-                                         
-
-
-            
             gifStills.attr("data-still", stills);
-            gifStills.attr("data-animate", animated);
+            gifStills.attr("data-animated", animated);
+            gifStills.attr("data-rating", ratings);
+
+
+            newDiv.append(imageHolder);
             $("#gifs-view").append(newDiv);
         } // Closes 'for-loop'
 
-        console.log(stillsURL);
         console.log(ratingsArray);
-        console.log(animatedURL);
         console.log(response);
 
     }); //closes response function
@@ -85,10 +81,20 @@ function renderButtons() {
     for (var i = 0; i < topics.length; i++) {
         var buttons = $("<button>");
         buttons.addClass("btn btn-primary");
+        buttons.attr('id', topics[i]);
         buttons.attr("data-name", topics[i]);
         buttons.text(topics[i]);
         $("#gifButtons").append(buttons);
     }
+    // for (var i = 0; i < actorNames.firstName.length; i++) {
+    //     var buttons = $("<button>");
+    //     buttons.addClass("btn btn-primary");
+    //     buttons.attr('id', actorNames.firstName[i]+" "+actorNames.lastName[i]);
+    //     // buttons.attr('id', actorNames.fullName[i]);
+    //     buttons.attr("data-name", actorNames.firstName[i]+"+"+actorNames.lastName[i]);
+    //     buttons.text(actorNames.firstName[i]+" "+actorNames.lastName[i]);
+    //     $("#gifButtons").append(buttons);
+    // }
 }
 
 $("#add-actor").on("click", function (event) {
@@ -97,17 +103,16 @@ $("#add-actor").on("click", function (event) {
     topics.push(newActor);
     renderButtons();
     $("#actor-input").val("");
-
-
 });
 
 $(document).on("click", ".btn", displayGIF);
 
+// when gif is clicked, changes from still to animated or vice versa
 $(document).on("click", ".gif-display", function () {
     var state = $(this).attr("data-state");
-    
+
     if (state === "still") {
-        $(this).attr('src', $(this).attr("data-animate"))
+        $(this).attr('src', $(this).attr("data-animated"))
         $(this).attr("data-state", "animated");
     } else {
         $(this).attr('src', $(this).attr("data-still"));
@@ -117,4 +122,4 @@ $(document).on("click", ".gif-display", function () {
 });
 
 renderButtons();
-console.log(topics);
+// console.log(topics);

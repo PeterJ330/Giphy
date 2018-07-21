@@ -1,16 +1,27 @@
 
-var topics = [
-    "Nicholas Cage",
-    "Will Ferrel",
-    "Maya rudolph",
-    "Sylvester Stallone",
-    "Amy Poehler",
-    "Leonardo Dicaprio",
-    "Tom Cruise",
-    "Arnold Schwarzenegger",
-    "Tina Fey",
-    "Tom Hanks",
-];
+var topics = {
+    firstName: ["Nicholas",
+        "Will",
+        "Maya",
+        "Sylvester",
+        "Amy",
+        "Leonardo",
+        "Tom",
+        "Arnold",
+        "Tina",
+        "Tom"],
+    lastName: ["Cage",
+        "Ferrel",
+        "rudolph",
+        "Stallone",
+        "Poehler",
+        "Dicaprio",
+        "Cruise",
+        "Schwarzenegger",
+        "Fey",
+        "Hanks"],
+}
+console.log(topics);
 
 var stills;
 var animated;
@@ -42,19 +53,16 @@ function displayGIF() {
             imageHolder.attr('id', 'holder');
 
             animated = response.data[i].images.original.url;
-            
+
             stills = response.data[i].images.original_still.url;
             gifStills = $("<img id='stillState' class='gif-display'>");
             gifStills.attr('src', stills, );
             gifStills.attr("data-state", 'still');
-            // newDiv.append(gifStills);
             imageHolder.append(gifStills);
-            
+
             ratings = response.data[i].rating;
             ratingsArray.push(ratings);
-            ratingsDiv = $("<p class='ratings-text'>").text(ratings);
-            // ratingsDiv = $("<div class='ratings-text'>").text(ratings);
-            // newDiv.append(ratingsDiv);
+            ratingsDiv = $("<p class='ratings-text'>").text(ratings);                        
             imageHolder.append(ratingsDiv);
 
             gifStills.attr("data-still", stills);
@@ -76,28 +84,36 @@ function renderButtons() {
     // delets buttons before adding new ones
     $("#gifButtons").empty();
     // loops through array of topics and then creates a button for each actor in the 'topics' array
-    for (var i = 0; i < topics.length; i++) {
+    for (var i = 0; i < topics.firstName.length; i++) {
+        var fullName = topics.firstName[i] +"+"+ topics.lastName[i];
+        var textName = topics.firstName[i] +" "+ topics.lastName[i];
+
         var buttons = $("<button>");
         buttons.addClass("btn btn-primary");
-        buttons.attr('id', topics[i]);
-        buttons.attr("data-name", topics[i]);
-        buttons.text(topics[i]);
+        buttons.attr('id', topics.firstName[i]+" "+topics.lastName[i]);
+        // buttons.attr("data-name", topics.firstName[i]+"+"+topics.lastName[i]);
+        buttons.attr('data-name', fullName);
+        buttons.text(textName);
         $("#gifButtons").append(buttons);
     }
 }
 
 $("#add-actor").on("click", function (event) {
     event.preventDefault();
+    var newFirstName = topics.firstName;
+    var newLastName = topics.lastName;
     var newActor = $("#actor-input").val().trim();
-    topics.push(newActor);
+    var newActorArray = newActor.split(" ");
+    newFirstName.push(newActorArray[0]);
+    newLastName.push(newActorArray[1]);
+
     renderButtons();
     $("#actor-input").val("");
-
-
 });
 
 $(document).on("click", ".btn", displayGIF);
 
+// when gif is clicked, changes from still to animated or vice versa
 $(document).on("click", ".gif-display", function () {
     var state = $(this).attr("data-state");
 
@@ -108,7 +124,7 @@ $(document).on("click", ".gif-display", function () {
         $(this).attr('src', $(this).attr("data-still"));
         $(this).attr("data-state", "still");
     }
-    
+
 });
 
 renderButtons();
